@@ -1,0 +1,11 @@
+{
+   "english":{
+    "Title":"Translate english to hindi",
+    "Description":"Translate web content into multiple language"
+   },
+   "hindi":{
+    "Title": "टेंचलेड अंग्रेजी से तमिल",
+    "Description": "टेंचलेड वेब सामग्री कई भाषाओं में है"
+   }
+
+}
