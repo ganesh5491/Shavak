@@ -1,31 +1,26 @@
-import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useAuth0 } from "@auth0/auth0-react";
-// import { useHistory } from 'react-router-dom';
 
 const Login = () => {
-  const history = useHistory();
-  const { loginWithPopup } = useAuth0();
+  const navigate = useNavigate();
+  const { loginWithRedirect, isAuthenticated } = useAuth0();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleAuth0Login = async () => {
-    try {
-      await loginWithPopup();
-      history.push('/Dashboard');
-    } catch (error) {
-      console.error(error);
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/dashboard');
     }
-  }
+  }, [isAuthenticated, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      // Perform authentication via your backend API
       const response = await axios.post('http://localhost:5000/login', {
         email,
         password,
@@ -33,7 +28,7 @@ const Login = () => {
 
       console.log(response.data);
       setError('');
-      handleAuth0Login();
+      loginWithRedirect(); // Redirect after successful login
     } catch (error) {
       console.error('Login failed:', error);
       Swal.fire({
@@ -75,13 +70,13 @@ const Login = () => {
             />
           </div>
           {error && <p>{error}</p>}
+
           <div className='mt-4 text-center'>
-            <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4">Login</button>
+            <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"onClick={() => loginWithRedirect()}>Login</button>
           </div>
           <span>Dont have an account?
             <Link to="/register" className='text-primary align-center'> Sign up</Link>
-          </span>
-        </form>
+          </span></form>
       </div>
     </div>
   );

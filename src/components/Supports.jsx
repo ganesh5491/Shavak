@@ -17,8 +17,8 @@ class Products extends Component {
       <div className='w-[100vw] overflow-x-hidden ' >
         <div className='container  '>
           <img src={img2} className="img-fluid object-fit overflow-hidden w-[100%] mb-5 " alt="Responsive image"></img>
-          <button class="btn1">Sign In</button>
-          <button class="btn2">Create Account</button>
+          <button className="btn1">Sign In</button>
+          <button className="btn2">Create Account</button>
         </div>
 
         <div className="col-md-10 col-sm-12 col-s-12">
